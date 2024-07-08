@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+
+  backend-modules:
+    build:
+      context: ./../backend
+      dockerfile: ./../backend/backend-modules.dockerfile
+
+  backend:
+    build:
+      context: ./../backend
+      dockerfile: ./../backend/backend.dockerfile
+    restart: always
+    environment:
+      NODE_HTTP: 'http://host.docker.internal:8545/'
+      NODE_WSS: 'wss://host.docker.internal:8545/'
+      FACTORY_ADDRESS: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+      ALLOW_CONFIG_MUTATIONS: true
+    ports:
+      - "4337:4337"
+
+  frontend-modules:
+    build:
+      context: ./../frontend
+      dockerfile: ./../frontend/frontend-modules.dockerfile
+
+  frontend:
+    build:
+      context: ./../frontend
+      dockerfile: ./../frontend/frontend.dockerfile
+    environment:
+      REACT_APP_FACTORY_ADDRESS: '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+    restart: always
+    ports:
+      - "3000:3000"
+  
+  hardhat-modules:
+    build:
+      context: ./../hardhat
+      dockerfile: ./../hardhat/hardhat-modules.dockerfile
+
+  hardhat:
+    build:
+      context: ./../hardhat
+      dockerfile: ./../hardhat/hardhat.dockerfile
+    ports:
+      - "8545:8545"
+    volumes:
+      - ./../hardhat/:/hardhat/

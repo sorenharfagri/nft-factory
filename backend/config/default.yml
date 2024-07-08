@@ -1,0 +1,10 @@
+server:
+  port: 4337
+
+node:
+  http: "https://ethereum-sepolia-rpc.publicnode.com"
+  wss: "wss://ethereum-sepolia-rpc.publicnode.com"
+
+
+tokenFactory:
+  address: "0x5FbDB2315678afecb367f032d93F642f64180aa3"
